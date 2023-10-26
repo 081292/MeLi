@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/locationFragment">
+
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.example.meli.ui.view.screens.LocationFragment"
+        android:label="Location"
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_locationFragment_to_browserFragment"
+            app:destination="@id/browserFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/browserFragment"
+        android:name="com.example.meli.ui.view.screens.BrowserFragment"
+        android:label="Browser"
+        tools:layout="@layout/fragment_browser" >
+        <action
+            android:id="@+id/action_browserFragment_to_productFragment"
+            app:destination="@id/productFragment" />
+        <argument
+            android:name="location"
+            app:argType="string"
+            android:defaultValue="Mexico" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.example.meli.ui.view.screens.ProductFragment"
+        android:label="Product"
+        tools:layout="@layout/fragment_product" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/networkConnectionLostFragment"
+        android:name="com.example.meli.ui.view.screens.NetworkConnectionLostFragment"
+        android:label="Network Connection Lost"
+        tools:layout="@layout/fragment_network_connection_lost" />
+
+</navigation>
