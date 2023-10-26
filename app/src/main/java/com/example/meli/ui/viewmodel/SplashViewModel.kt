@@ -1,7 +1,7 @@
 package com.example.meli.ui.viewmodel
 
 import com.example.meli.ui.viewmodel.base.MeLiBaseViewModel
-import com.example.meli.utils.NetworkManager
+import com.example.meli.network.NetworkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package com.example.meli.ui.view.screens
+package com.example.meli.feature._network
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.meli.R
 
-class ProductFragment : Fragment() {
+class NetworkConnectionLostFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_product, container, false)
+        return inflater.inflate(R.layout.fragment_network_connection_lost, container, false)
     }
 }

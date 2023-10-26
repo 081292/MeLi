@@ -39,7 +39,7 @@ class MainActivity : MeLiBaseViewModelActivity<MainViewModel>() {
     }
 
     private fun onNetworkConnectionEstablished() {
-        navController.navigate(R.id.locationFragment)
+        navController.navigate(R.id.sitesFragment)
     }
 
     private fun onNetworkConnectionLost() {

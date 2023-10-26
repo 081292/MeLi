@@ -1,4 +1,4 @@
-package com.example.meli.utils
+package com.example.meli.network
 
 import android.content.Context
 import android.net.ConnectivityManager

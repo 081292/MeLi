@@ -1,7 +1,7 @@
 package com.example.meli
 
 import android.app.Application
-import com.example.meli.utils.NetworkManager
+import com.example.meli.network.NetworkManager
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
