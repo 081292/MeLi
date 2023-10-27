@@ -18,7 +18,7 @@ class ItemsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_browser, container, false)
+        val root = inflater.inflate(R.layout.fragment_items, container, false)
 
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {

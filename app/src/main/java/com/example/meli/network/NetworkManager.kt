@@ -21,7 +21,7 @@ class NetworkManager(
 
     private val networkRequest = NetworkRequest.Builder().build()
 
-    internal val networkCallback = object : ConnectivityManager.NetworkCallback() {
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
             _state.value = _state.value.copy(

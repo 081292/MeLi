@@ -1,8 +1,8 @@
 package com.example.meli.feature.sites.data.remote
 
-import com.example.meli.feature.sites.data.remote.SitesAPIService
+import retrofit2.Response
 
-class SitesRepository(private val apiService: SitesAPIService) {
+interface SitesRepository {
 
-    suspend fun getSitesOfService() = apiService.getSitesOfService()
+    suspend fun getSitesOfService(): Response<List<SitesServiceResponse>>
 }

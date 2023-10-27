@@ -13,6 +13,6 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_product, container, false)
+        return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 }

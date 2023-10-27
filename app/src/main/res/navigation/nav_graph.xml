@@ -11,29 +11,29 @@
         android:label="Sites"
         tools:layout="@layout/fragment_sites" >
         <action
-            android:id="@+id/action_sitesFragment_to_browserFragment"
-            app:destination="@id/browserFragment" />
+            android:id="@+id/action_sitesFragment_to_itemsFragment"
+            app:destination="@id/itemsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/browserFragment"
+        android:id="@+id/itemsFragment"
         android:name="com.example.meli.feature.items.ui.ItemsFragment"
-        android:label="Browser"
-        tools:layout="@layout/fragment_browser" >
-        <action
-            android:id="@+id/action_browserFragment_to_productFragment"
-            app:destination="@id/productFragment" />
+        android:label="Items"
+        tools:layout="@layout/fragment_items" >
         <argument
             android:name="site"
             app:argType="string"
             android:defaultValue="Mexico" />
+        <action
+            android:id="@+id/action_itemsFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/productFragment"
+        android:id="@+id/detailFragment"
         android:name="com.example.meli.feature.detail.ui.DetailFragment"
-        android:label="Product"
-        tools:layout="@layout/fragment_product" >
+        android:label="Detail"
+        tools:layout="@layout/fragment_detail" >
     </fragment>
 
     <fragment

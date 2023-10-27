@@ -2,6 +2,7 @@ package com.example.meli.di
 
 import com.example.meli.feature.sites.data.remote.SitesAPIService
 import com.example.meli.feature.sites.data.remote.SitesRepository
+import com.example.meli.feature.sites.data.remote.SitesRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +15,5 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun providesRepository(sitesAPIService: SitesAPIService) = SitesRepository(sitesAPIService)
+    fun providesRepository(sitesAPIService: SitesAPIService): SitesRepository = SitesRepositoryImpl(sitesAPIService)
 }

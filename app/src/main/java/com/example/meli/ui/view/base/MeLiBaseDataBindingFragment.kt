@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import com.example.meli.BR
 import com.example.meli.ui.viewmodel.base.MeLiBaseViewModel
 
 typealias Inflater<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-abstract class MeLiBaseViewDataBindingFragment<T : ViewDataBinding, U : MeLiBaseViewModel<*, *>> :
+abstract class MeLiBaseDataBindingFragment<T : ViewDataBinding, U : MeLiBaseViewModel<*, *>> :
     MeLiBaseViewModelFragment<U>() {
 
     private var _binding: T? = null
@@ -20,7 +21,7 @@ abstract class MeLiBaseViewDataBindingFragment<T : ViewDataBinding, U : MeLiBase
     protected abstract fun bindingInflater(): Inflater<T>
 
     protected open fun bindViewModel() {
-        binding.setVariable(3, viewModel)
+        binding.setVariable(BR.viewModel, viewModel)
     }
 
     override fun onCreateView(
