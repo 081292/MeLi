@@ -34,7 +34,7 @@ class SitesViewModel @Inject constructor(
                     val siteDataModelList = fetchSitesResponse.value.body()?.toList()
                     if (!siteDataModelList.isNullOrEmpty()) {
                         updateState{
-                            SitesState.SitesModelState(mapSiteDataModelListToSiteUIModelList(siteDataModelList))
+                            SitesState.SitesModelState(mapSiteDataModelListToSiteUIModelList(siteDataModelList.sortedBy { it.name }))
                         }
                     }
                 }

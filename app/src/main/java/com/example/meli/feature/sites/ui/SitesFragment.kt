@@ -5,7 +5,10 @@ import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meli.databinding.FragmentSitesBinding
+import com.example.meli.feature.sites.ui.adapter.SiteAdapter
 import com.example.meli.ui.view.base.Inflater
 import com.example.meli.ui.view.base.MeLiBaseDataBindingFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +41,7 @@ class SitesFragment : MeLiBaseDataBindingFragment<FragmentSitesBinding, SitesVie
                     Log.d("TAG", "Loading")
                 }
                 is SitesState.SitesModelState -> {
-                    Log.d("TAG", "Data ${it.siteUIModelList}")
+                    initRecyclerView(it.siteUIModelList)
                 }
                 is SitesState.Error -> {
                     Log.d(
@@ -48,5 +51,10 @@ class SitesFragment : MeLiBaseDataBindingFragment<FragmentSitesBinding, SitesVie
                 }
             }
         }
+    }
+
+    private fun initRecyclerView(siteUIModelList: List<SiteUIModel>) {
+        binding.sitesRV.layoutManager = LinearLayoutManager(activity?.applicationContext)
+        binding.sitesRV.adapter = SiteAdapter(siteUIModelList, findNavController())
     }
 }

@@ -31,6 +31,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -65,4 +66,5 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:3.12.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.5.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }
