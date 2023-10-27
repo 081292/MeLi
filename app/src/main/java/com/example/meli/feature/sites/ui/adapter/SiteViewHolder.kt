@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.meli.R
 import com.example.meli.databinding.ItemSiteBinding
 import com.example.meli.feature.sites.ui.SiteUIModel
+import com.example.meli.feature.sites.ui.SitesFragmentDirections
 
 class SiteViewHolder(private val view: View, private val findNavController: NavController) :
     RecyclerView.ViewHolder(view) {
@@ -15,7 +16,11 @@ class SiteViewHolder(private val view: View, private val findNavController: NavC
     fun render(siteUIModel: SiteUIModel) {
         binding.siteName.text = siteUIModel.name
         itemView.setOnClickListener {
-            findNavController.navigate(R.id.action_sitesFragment_to_itemsFragment)
+            findNavController.navigate(
+                SitesFragmentDirections.actionSitesFragmentToItemsFragment(
+                    siteId = siteUIModel.id
+                )
+            )
         }
     }
 }

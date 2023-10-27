@@ -1,24 +1,30 @@
 package com.example.meli.feature.items.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.meli.R
+import com.example.meli.databinding.FragmentItemsBinding
+import com.example.meli.ui.view.base.Inflater
+import com.example.meli.ui.view.base.MeLiBaseDataBindingFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlin.reflect.KClass
 
-class ItemsFragment : Fragment() {
+@AndroidEntryPoint
+class ItemsFragment : MeLiBaseDataBindingFragment<FragmentItemsBinding, ItemsViewModel>() {
 
     private val args: ItemsFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_items, container, false)
+    override fun bindingInflater(): Inflater<FragmentItemsBinding> = FragmentItemsBinding::inflate
+
+    override fun viewModelClass(): KClass<ItemsViewModel> = ItemsViewModel::class
+
+    override val viewModel: ItemsViewModel by viewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
@@ -27,12 +33,6 @@ class ItemsFragment : Fragment() {
             }
         })
 
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        //args.location
+        //args.siteId
     }
 }

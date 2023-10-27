@@ -21,7 +21,7 @@
         android:label="Items"
         tools:layout="@layout/fragment_items" >
         <argument
-            android:name="site"
+            android:name="siteId"
             app:argType="string"
             android:defaultValue="Mexico" />
         <action
