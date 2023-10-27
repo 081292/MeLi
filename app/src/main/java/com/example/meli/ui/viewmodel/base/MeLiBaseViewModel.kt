@@ -6,9 +6,7 @@ import androidx.lifecycle.MutableLiveData
 abstract class MeLiBaseViewModel<VS : Any, A : Any> : MeLiBaseActionViewModel<A>() {
 
     private val _viewState: MutableLiveData<VS> by lazy {
-        MutableLiveData<VS>().apply {
-            value = buildInitialState()
-        }
+        MutableLiveData<VS>()
     }
 
     val viewState: LiveData<VS>
@@ -16,8 +14,6 @@ abstract class MeLiBaseViewModel<VS : Any, A : Any> : MeLiBaseActionViewModel<A>
 
     protected val currentState: VS
         get() = viewState.value!!
-
-    abstract fun buildInitialState(): VS
 
     protected fun updateState(updated: VS) {
         _viewState.value = updated

@@ -13,10 +13,6 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(private val networkManager: NetworkManager) :
     MeLiBaseViewModel<SplashState, SplashActions>() {
 
-    override fun buildInitialState(): SplashState {
-        TODO("Not yet implemented")
-    }
-
     init {
         networkManager.setupNetworkManager()
         CoroutineScope(Dispatchers.IO).launch {

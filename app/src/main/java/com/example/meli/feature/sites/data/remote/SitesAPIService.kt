@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface SitesAPIService {
 
     @GET("sites")
-    suspend fun getSitesOfService(): Response<List<SitesServiceResponse>>
+    suspend fun fetchSites(): Response<List<SiteDataModel>>
 }

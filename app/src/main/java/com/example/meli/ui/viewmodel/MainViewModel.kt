@@ -10,7 +10,4 @@ class MainViewModel @Inject constructor(
     private val networkManager: NetworkManager,
 ) : MeLiBaseViewModel<MainState, MainActions>() {
 
-    override fun buildInitialState(): MainState {
-        TODO("Not yet implemented")
-    }
 }

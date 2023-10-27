@@ -1,14 +1,13 @@
 package com.example.meli.feature.sites.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.meli.databinding.FragmentSitesBinding
 import com.example.meli.ui.view.base.Inflater
 import com.example.meli.ui.view.base.MeLiBaseDataBindingFragment
-import com.example.meli.ui.viewmodel.base.observeActions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.reflect.KClass
 
@@ -29,8 +28,25 @@ class SitesFragment : MeLiBaseDataBindingFragment<FragmentSitesBinding, SitesVie
             override fun handleOnBackPressed() {}
         })
 
-        viewModel.observeActions(lifecycleScope) { actions ->
-
+        viewModel.sendAction(SitesActions.FetchSites)
+        viewModel.viewState.observe(viewLifecycleOwner) {
+            when (it) {
+                is SitesState.Inactive -> {
+                    Log.d("TAG", "Inactive")
+                }
+                is SitesState.Loading -> {
+                    Log.d("TAG", "Loading")
+                }
+                is SitesState.SitesModelState -> {
+                    Log.d("TAG", "Data ${it.siteUIModelList}")
+                }
+                is SitesState.Error -> {
+                    Log.d(
+                        "TAG",
+                        "Error{ Code: ${it.code.toString()} Message: ${it.error.toString()} }"
+                    )
+                }
+            }
         }
     }
 }
