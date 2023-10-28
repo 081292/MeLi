@@ -8,10 +8,9 @@ import retrofit2.http.Query
 
 interface ItemsAPIService {
 
-    @FormUrlEncoded
     @GET("sites/{siteId}/search")
     suspend fun fetchItems(
-        @Path("siteId") siteId: Int,
+        @Path("siteId") siteId: String,
         @Query("q") item: String?,
     ): Response<Items>
 }

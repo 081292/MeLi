@@ -2,5 +2,5 @@ package com.example.meli.feature.items.ui
 
 sealed class ItemsActions {
 
-    object FetchItems: ItemsActions()
+    data class FetchItems(val siteId: String, val item: String) : ItemsActions()
 }

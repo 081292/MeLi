@@ -11,7 +11,7 @@ class ItemsRepositoryImpl @Inject constructor(
     private val itemsAPIService: ItemsAPIService
 ) : ItemsRepository {
 
-    override suspend fun fetchItems(siteId: Int, item: String): ResultWrapper<Response<Items>> {
+    override suspend fun fetchItems(siteId: String, item: String): ResultWrapper<Response<Items>> {
         return safeApiCall(Dispatchers.IO) {
             itemsAPIService.fetchItems(siteId = siteId, item = item)
         }

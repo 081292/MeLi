@@ -1,6 +1,7 @@
 package com.example.meli.di
 
 import android.content.Context
+import com.example.meli.feature.items.data.remote.ItemsAPIService
 import com.example.meli.feature.sites.data.remote.SitesAPIService
 import com.example.meli.network.NetworkManager
 import dagger.Module
@@ -45,7 +46,11 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): SitesAPIService = retrofit.create(SitesAPIService::class.java)
+    fun provideSitesApiService(retrofit: Retrofit): SitesAPIService = retrofit.create(SitesAPIService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideItemsApiService(retrofit: Retrofit): ItemsAPIService = retrofit.create(ItemsAPIService::class.java)
 
     @Singleton
     @Provides

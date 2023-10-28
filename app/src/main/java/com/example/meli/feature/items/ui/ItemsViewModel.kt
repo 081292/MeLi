@@ -1,10 +1,8 @@
 package com.example.meli.feature.items.ui
 
 import androidx.lifecycle.viewModelScope
-import com.example.meli.feature.items.ui.ItemsActions
-import com.example.meli.feature.items.ui.ItemsState
-import com.example.meli.feature.sites.data.remote.SiteDataModel
-import com.example.meli.feature.sites.data.remote.SitesRepositoryImpl
+import com.example.meli.feature.items.data.remote.ItemDataModel
+import com.example.meli.feature.items.data.remote.ItemsRepositoryImpl
 import com.example.meli.network.NetworkManager
 import com.example.meli.ui.viewmodel.base.MeLiBaseViewModel
 import com.example.meli.ui.viewmodel.base.observeActions
@@ -16,33 +14,35 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemsViewModel @Inject constructor(
     private val networkManager: NetworkManager,
-    private val sitesRepositoryImpl: SitesRepositoryImpl,
+    private val itemsRepositoryImpl: ItemsRepositoryImpl,
 ) : MeLiBaseViewModel<ItemsState, ItemsActions>() {
 
     init {
         this.observeActions(viewModelScope) {
             when (it) {
-                is ItemsActions.FetchItems -> fetchItems()
+                is ItemsActions.FetchItems -> fetchItems(it.siteId, it.item)
             }
         }
     }
 
-    private fun fetchItems() {
+    private fun fetchItems(siteId: String, item: String) {
         viewModelScope.launch {
             updateState(ItemsState.Loading)
-            when (val fetchSitesResponse = sitesRepositoryImpl.fetchSites()) {
+            when (val fetchItemsResponse = itemsRepositoryImpl.fetchItems(siteId, item)) {
                 is ResultWrapper.Success -> {
-//                    val siteDataModelList = fetchSitesResponse.value.body()?.toList()
-//                    if (!siteDataModelList.isNullOrEmpty()) {
-//                        updateState{
-//                            SitesState.SitesModelState(mapSiteDataModelListToSiteUIModelList(siteDataModelList.sortedBy { it.name }))
-//                        }
-//                    }
+                    val itemsDataModelList = fetchItemsResponse.value.body()?.results
+                    if (!itemsDataModelList.isNullOrEmpty()) {
+                        updateState {
+                            ItemsState.ItemsModelState(
+                                mapItemDataModelListToItemUIModelList(itemsDataModelList)
+                            )
+                        }
+                    }
                 }
                 is ResultWrapper.GenericError -> {
                     updateState(
                         ItemsState.Error(
-                            code = fetchSitesResponse.code, error = fetchSitesResponse.message
+                            code = fetchItemsResponse.code, error = fetchItemsResponse.message
                         )
                     )
                 }
@@ -50,15 +50,18 @@ class ItemsViewModel @Inject constructor(
         }
     }
 
-//    private fun mapSiteDataModelListToSiteUIModelList(listOfSitesDataModel: List<SiteDataModel>): List<SiteUIModel> {
-//        val listOfSitesUIModel = mutableListOf<SiteUIModel>()
-//        for (site in listOfSitesDataModel) {
-//            listOfSitesUIModel.add(
-//                SiteUIModel(
-//                    default_currency_id = site.default_currency_id, id = site.id, name = site.name
-//                )
-//            )
-//        }
-//        return listOfSitesUIModel
-//    }
+    private fun mapItemDataModelListToItemUIModelList(listOfSitesDataModel: List<ItemDataModel>): List<ItemUIModel> {
+        val listOfSitesUIModel = mutableListOf<ItemUIModel>()
+        for (item in listOfSitesDataModel) {
+            listOfSitesUIModel.add(
+                ItemUIModel(
+                    id = item.id,
+                    title = item.title,
+                    price = item.price,
+                    thumbnail = item.thumbnail,
+                )
+            )
+        }
+        return listOfSitesUIModel
+    }
 }
