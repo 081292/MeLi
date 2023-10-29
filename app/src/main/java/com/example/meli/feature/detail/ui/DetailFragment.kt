@@ -3,6 +3,7 @@ package com.example.meli.feature.detail.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -36,6 +37,22 @@ class DetailFragment : MeLiBaseDataBindingFragment<FragmentDetailBinding, Detail
 
                 is DetailState.Loading -> {
                     Log.d("TAG", "Loading")
+                }
+
+                is DetailState.Network -> {
+                    if (it.online) {
+                        Toast.makeText(
+                            activity?.applicationContext,
+                            "¡ Connected to Internet !",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            activity?.applicationContext,
+                            "¡ No internet connection !",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
 
                 is DetailState.DetailModelState -> {

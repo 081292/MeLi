@@ -2,17 +2,14 @@ package com.example.meli.feature.detail.ui
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.meli.feature.detail.data.remote.DetailDataModel
 import com.example.meli.feature.detail.data.remote.DetailRepositoryImpl
 import com.example.meli.feature.detail.data.remote.PicturesDataModel
-import com.example.meli.feature.items.data.remote.ItemsRepositoryImpl
-import com.example.meli.feature.sites.data.remote.SiteDataModel
-import com.example.meli.feature.sites.ui.SiteUIModel
 import com.example.meli.network.NetworkManager
 import com.example.meli.ui.viewmodel.base.MeLiBaseViewModel
 import com.example.meli.ui.viewmodel.base.observeActions
 import com.example.meli.utils.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,9 +25,19 @@ class DetailViewModel @Inject constructor(
                 is DetailActions.FetchItem -> fetchItem(it.itemId)
             }
         }
+        viewModelScope.launch {
+            networkManager.state.collectLatest {
+                updateState(
+                    DetailState.Network(
+                        online = it.online
+                    )
+                )
+            }
+        }
     }
 
     private fun fetchItem(itemId: String) {
+        if (!networkManager.online) return
         viewModelScope.launch {
             updateState(DetailState.Loading)
             when (val fetchDetailResponse = detailRepositoryImpl.fetchItem(itemId)) {

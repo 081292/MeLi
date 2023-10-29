@@ -8,6 +8,7 @@ import com.example.meli.ui.viewmodel.base.MeLiBaseViewModel
 import com.example.meli.ui.viewmodel.base.observeActions
 import com.example.meli.utils.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,20 +24,33 @@ class SitesViewModel @Inject constructor(
                 is SitesActions.FetchSites -> fetchSites()
             }
         }
+        viewModelScope.launch {
+            networkManager.state.collectLatest {
+                updateState(
+                    SitesState.Network(
+                        online = it.online
+                    )
+                )
+            }
+        }
     }
 
     private fun fetchSites() {
+        if (!networkManager.online) return
         viewModelScope.launch {
             updateState(SitesState.Loading)
             when (val fetchSitesResponse = sitesRepositoryImpl.fetchSites()) {
                 is ResultWrapper.Success -> {
                     val siteDataModelList = fetchSitesResponse.value.body()?.toList()
                     if (!siteDataModelList.isNullOrEmpty()) {
-                        updateState{
-                            SitesState.SitesModelState(mapSiteDataModelListToSiteUIModelList(siteDataModelList.sortedBy { it.name }))
+                        updateState {
+                            SitesState.SitesModelState(
+                                mapSiteDataModelListToSiteUIModelList(siteDataModelList.sortedBy { it.name })
+                            )
                         }
                     }
                 }
+
                 is ResultWrapper.GenericError -> {
                     updateState(
                         SitesState.Error(

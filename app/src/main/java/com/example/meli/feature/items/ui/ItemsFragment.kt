@@ -3,6 +3,7 @@ package com.example.meli.feature.items.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
@@ -51,6 +52,22 @@ class ItemsFragment : MeLiBaseDataBindingFragment<FragmentItemsBinding, ItemsVie
 
                 is ItemsState.Loading -> {
                     Log.d("TAG", "Loading")
+                }
+
+                is ItemsState.Network -> {
+                    if (it.online) {
+                        Toast.makeText(
+                            activity?.applicationContext,
+                            "¡ Connected to Internet !",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            activity?.applicationContext,
+                            "¡ No internet connection !",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
 
                 is ItemsState.ItemsModelState -> {

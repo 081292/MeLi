@@ -3,6 +3,7 @@ package com.example.meli.feature.sites.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,12 +38,31 @@ class SitesFragment : MeLiBaseDataBindingFragment<FragmentSitesBinding, SitesVie
                 is SitesState.Inactive -> {
                     Log.d("TAG", "Inactive")
                 }
+
                 is SitesState.Loading -> {
                     Log.d("TAG", "Loading")
                 }
+
                 is SitesState.SitesModelState -> {
                     initRecyclerView(it.siteUIModelList)
                 }
+
+                is SitesState.Network -> {
+                    if(it.online){
+                        Toast.makeText(
+                            activity?.applicationContext,
+                            "¡ Connected to Internet !",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            activity?.applicationContext,
+                            "¡ No internet connection !",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+
                 is SitesState.Error -> {
                     Log.d(
                         "TAG",
