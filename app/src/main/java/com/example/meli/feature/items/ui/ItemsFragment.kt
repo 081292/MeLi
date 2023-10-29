@@ -54,9 +54,8 @@ class ItemsFragment : MeLiBaseDataBindingFragment<FragmentItemsBinding, ItemsVie
                 }
 
                 is ItemsState.ItemsModelState -> {
-                    Log.d("TAG", "Data ${it.siteUIModelList}")
                     itemUIModelList.clear()
-                    itemUIModelList.addAll(it.siteUIModelList)
+                    itemUIModelList.addAll(it.itemUIModelList)
                     binding.itemsRV.adapter?.notifyDataSetChanged()
                 }
 

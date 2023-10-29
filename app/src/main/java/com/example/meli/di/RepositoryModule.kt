@@ -1,5 +1,8 @@
 package com.example.meli.di
 
+import com.example.meli.feature.detail.data.remote.DetailAPIService
+import com.example.meli.feature.detail.data.remote.DetailRepository
+import com.example.meli.feature.detail.data.remote.DetailRepositoryImpl
 import com.example.meli.feature.items.data.remote.ItemsAPIService
 import com.example.meli.feature.items.data.remote.ItemsRepository
 import com.example.meli.feature.items.data.remote.ItemsRepositoryImpl
@@ -18,9 +21,16 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun providesSitesRepository(sitesAPIService: SitesAPIService): SitesRepository = SitesRepositoryImpl(sitesAPIService)
+    fun providesSitesRepository(sitesAPIService: SitesAPIService): SitesRepository =
+        SitesRepositoryImpl(sitesAPIService)
 
     @Singleton
     @Provides
-    fun providesItemsRepository(itemsAPIService: ItemsAPIService): ItemsRepository = ItemsRepositoryImpl(itemsAPIService)
+    fun providesItemsRepository(itemsAPIService: ItemsAPIService): ItemsRepository =
+        ItemsRepositoryImpl(itemsAPIService)
+
+    @Singleton
+    @Provides
+    fun providesDetailRepository(detailAPIService: DetailAPIService): DetailRepository =
+        DetailRepositoryImpl(detailAPIService)
 }
