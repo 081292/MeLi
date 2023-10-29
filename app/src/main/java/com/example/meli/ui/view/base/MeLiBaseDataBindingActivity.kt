@@ -12,12 +12,18 @@ abstract class MeLiBaseDataBindingActivity<T : ViewDataBinding, U : MeLiBaseView
 
     private var _binding: T? = null
 
+    /**
+     * The [ViewDataBinding] its for use of the subclasses.
+     */
     protected val binding: T
         get() = _binding as T
 
     @LayoutRes
     protected abstract fun layoutResId(): Int?
 
+    /**
+     * Automatically tries to set view model of view binding.
+     */
     protected open fun bindViewModel() {
         binding.setVariable(BR.viewModel, viewModel)
     }

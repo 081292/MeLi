@@ -12,7 +12,7 @@ abstract class MeLiBaseViewModel<VS : Any, A : Any> : MeLiBaseActionViewModel<A>
     val viewState: LiveData<VS>
         get() = _viewState
 
-    protected val currentState: VS
+    val currentState: VS
         get() = viewState.value!!
 
     protected fun updateState(updated: VS) {

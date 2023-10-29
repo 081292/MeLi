@@ -16,6 +16,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+/**
+ *  [NetworkModule] class is the module that will provide the instances of Retrofit and API Services consumed in the app.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {

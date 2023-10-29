@@ -15,6 +15,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ *  [RepositoryModule] class is the module that will provide the instances of Repositories consumed in the app.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {

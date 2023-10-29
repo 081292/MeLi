@@ -10,6 +10,9 @@ import com.example.meli.ui.viewmodel.base.MeLiBaseViewModel
 
 typealias Inflater<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
+/**
+ * Base class for Fragments that use Data Binding and a ViewModel
+ */
 abstract class MeLiBaseDataBindingFragment<T : ViewDataBinding, U : MeLiBaseViewModel<*, *>> :
     MeLiBaseViewModelFragment<U>() {
 
@@ -18,8 +21,16 @@ abstract class MeLiBaseDataBindingFragment<T : ViewDataBinding, U : MeLiBaseView
     protected val binding: T
         get() = _binding as T
 
+
+    /**
+     * The ViewDataBinding to be used by subclasses. This property is valid between [onCreateView] and
+     * [onDestroyView] only, because the view exist only between those two methods
+     */
     protected abstract fun bindingInflater(): Inflater<T>
 
+    /**
+     * Automatically tries to set view model of view binding.
+     */
     protected open fun bindViewModel() {
         binding.setVariable(BR.viewModel, viewModel)
     }
