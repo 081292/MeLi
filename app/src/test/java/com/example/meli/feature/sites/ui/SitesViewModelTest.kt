@@ -18,24 +18,9 @@ import retrofit2.Response
 
 class SitesViewModelTest : MeLiBaseViewModelTest<SitesActions, SitesViewModel>() {
 
-    private val siteDateModel = SiteDataModel(
-        default_currency_id = "",
-        id = "",
-        name = "MEXICO",
-    )
+    private val sitesRepositoryImpl: SitesRepositoryImpl = mockk(relaxed = true)
 
-    private val response: Response<List<SiteDataModel>> = mockk(relaxed = true) {
-        every { body() } returns listOf(siteDateModel)
-    }
-
-    private val sitesRepositoryImpl: SitesRepositoryImpl = mockk(relaxed = true) {
-        coEvery { fetchSites() } returns ResultWrapper.Success(response)
-    }
-
-    private val networkManager: NetworkManager = mockk(relaxed = true) {
-        every { online } returns true
-        every { state.value } returns NetworkState(online = true)
-    }
+    private val networkManager: NetworkManager = mockk(relaxed = true)
 
     override fun viewModelProvider(): SitesViewModel = spyk(
         SitesViewModel(
@@ -51,6 +36,15 @@ class SitesViewModelTest : MeLiBaseViewModelTest<SitesActions, SitesViewModel>()
 
     @Test
     fun `test fetch sites`() = runBlocking {
+        every { networkManager.online } returns true
+        every { networkManager.state.value } returns NetworkState(online = true)
+        val siteDateModel =
+            SiteDataModel(default_currency_id = "test", id = "test", name = "MEXICO")
+        val response: Response<List<SiteDataModel>> = mockk(relaxed = true) {
+            every { body() } returns listOf(siteDateModel)
+        }
+
+        coEvery { sitesRepositoryImpl.fetchSites() } returns ResultWrapper.Success(response)
 
         viewModel.callPrivateFunc("fetchSites")
 
@@ -59,5 +53,22 @@ class SitesViewModelTest : MeLiBaseViewModelTest<SitesActions, SitesViewModel>()
         }
         assert(networkManager.state.value.online)
         assert(viewModel.currentState is SitesState.SitesModelState)
+    }
+
+    @Test
+    fun `test fetch sites abort on offline`() = runBlocking {
+        every { networkManager.online } returns false
+        every { networkManager.state.value } returns NetworkState(online = false)
+        coEvery { sitesRepositoryImpl.fetchSites() } returns ResultWrapper.GenericError(
+            code = 0,
+            message = "test"
+        )
+
+        viewModel.callPrivateFunc("fetchSites")
+
+        verify(exactly = 0) {
+            sitesRepositoryImpl["fetchSites"]()
+        }
+        assert(!networkManager.state.value.online)
     }
 }

@@ -54,6 +54,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("com.google.dagger:hilt-android-testing:2.48")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
+    androidTestImplementation(project(mapOf("path" to ":app")))
     kaptTest("com.google.dagger:hilt-compiler:2.48")
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.9.10")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

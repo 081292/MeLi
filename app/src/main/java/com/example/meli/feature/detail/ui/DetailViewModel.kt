@@ -42,7 +42,6 @@ class DetailViewModel @Inject constructor(
             updateState(DetailState.Loading)
             when (val fetchDetailResponse = detailRepositoryImpl.fetchItem(itemId)) {
                 is ResultWrapper.Success -> {
-                    Log.d("TAG", "" + fetchDetailResponse.value.body())
                     val detailDataModel = fetchDetailResponse.value.body()?.toList()?.first()
                     updateState(
                         DetailState.DetailModelState(
